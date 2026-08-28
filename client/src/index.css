@@ -2100,7 +2100,8 @@ html[dir="rtl"] .footer__links {
 }
 
 .contact-form input,
-.contact-form textarea {
+.contact-form textarea,
+.contact-form select {
   width: 100%;
   border: 1px solid var(--ink);
   border-radius: 0;
@@ -2119,7 +2120,8 @@ html[dir="rtl"] .footer__links {
 }
 
 .contact-form input:focus,
-.contact-form textarea:focus {
+.contact-form textarea:focus,
+.contact-form select:focus {
   border-color: var(--cobalt);
   box-shadow: 3px 3px 0 var(--coral);
 }

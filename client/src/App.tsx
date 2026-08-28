@@ -15,6 +15,7 @@ import About from "./pages/About";
 import Connect from "./pages/Connect";
 import Home from "./pages/Home";
 import Work from "./pages/Work";
+import Services from "./pages/Services";
 
 function Router() {
   return (
@@ -24,6 +25,7 @@ function Router() {
         <Route path="/work" component={Work} />
         <Route path="/about" component={About} />
         <Route path="/connect" component={Connect} />
+        <Route path="/services" component={Services} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

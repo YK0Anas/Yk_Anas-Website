@@ -16,6 +16,7 @@ const navigation = [
   { href: "/work", en: "Work", ar: "الأعمال" },
   { href: "/about", en: "About", ar: "نبذة" },
   { href: "/connect", en: "Connect", ar: "تواصل" },
+  { href: "/services", en: "Services", ar: "الخدمات" },
 ];
 
 export default function SiteLayout({ children }: { children: ReactNode }) {

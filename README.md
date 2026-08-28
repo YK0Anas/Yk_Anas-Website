@@ -8,8 +8,9 @@ A personal portfolio for Anas, known online as **YK_Anas**. The site presents An
 - `/work` — Public coding and bot repositories
 - `/about` — Skills, art, animation, and Discord bot focus
 - `/connect` — Discord, GitHub, and YouTube links
+- `/services` — Website creation, Discord bot programming, and drawing services
 
-The interface supports English and Arabic. Use the circular language control in the bottom-right corner to switch languages; Arabic pages use right-to-left layout and the selected language is saved for the visit.
+The interface supports English and Arabic. Use the circular language control in the bottom-right corner to switch languages; Arabic pages use right-to-left layout and the selected language is saved for the visit. The floating contact control offers two routes: Discord or an on-site email form with a service selector for websites, Discord bots, drawing, and Another.
 
 ## Run locally
 

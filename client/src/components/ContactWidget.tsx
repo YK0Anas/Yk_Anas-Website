@@ -16,10 +16,11 @@ type ContactMode = "options" | "form";
 type FormValues = {
   name: string;
   email: string;
+  service: string;
   message: string;
 };
 
-const initialValues: FormValues = { name: "", email: "", message: "" };
+const initialValues: FormValues = { name: "", email: "", service: "", message: "" };
 
 export default function ContactWidget() {
   const { language } = useLanguage();
@@ -58,6 +59,7 @@ export default function ContactWidget() {
         },
         body: JSON.stringify({
           ...values,
+          service: serviceChoices.find((choice) => choice.value === values.service)?.label ?? values.service,
           _subject: `New portfolio message from ${values.name}`,
           _template: "table",
         }),
@@ -84,6 +86,8 @@ export default function ContactWidget() {
         back: "العودة إلى الخيارات",
         name: "الاسم",
         emailField: "بريدك الإلكتروني",
+        service: "الخدمة المطلوبة",
+        servicePlaceholder: "اختر خدمة",
         message: "رسالتك",
         namePlaceholder: "اكتب اسمك",
         emailPlaceholder: "you@example.com",
@@ -106,6 +110,8 @@ export default function ContactWidget() {
         back: "Back to choices",
         name: "Name",
         emailField: "Your email",
+        service: "Service",
+        servicePlaceholder: "Choose a service",
         message: "Message",
         namePlaceholder: "Your name",
         emailPlaceholder: "you@example.com",
@@ -116,6 +122,20 @@ export default function ContactWidget() {
         error: "The message could not be sent. Try again or contact me through Discord.",
         serviceNote: "Delivered to anastayl560@gmail.com",
       };
+
+  const serviceChoices = isArabic
+    ? [
+        { value: "website", label: "صناعة المواقع" },
+        { value: "discord", label: "برمجة بوتات Discord" },
+        { value: "drawing", label: "الرسم والتوضيح" },
+        { value: "another", label: "شيء آخر" },
+      ]
+    : [
+        { value: "website", label: "Making websites" },
+        { value: "discord", label: "Programming Discord bots" },
+        { value: "drawing", label: "Drawing" },
+        { value: "another", label: "Another" },
+      ];
 
   return (
     <div className="contact-widget">
@@ -159,6 +179,13 @@ export default function ContactWidget() {
               <label>
                 <span>{labels.emailField}</span>
                 <input required type="email" value={values.email} onChange={(event) => updateField("email", event.target.value)} placeholder={labels.emailPlaceholder} autoComplete="email" />
+              </label>
+              <label>
+                <span>{labels.service}</span>
+                <select required value={values.service} onChange={(event) => updateField("service", event.target.value)}>
+                  <option value="">{labels.servicePlaceholder}</option>
+                  {serviceChoices.map((choice) => <option value={choice.value} key={choice.value}>{choice.label}</option>)}
+                </select>
               </label>
               <label>
                 <span>{labels.message}</span>
