@@ -8,7 +8,7 @@ import { ArrowDownRight, ArrowUpRight, Circle, Code2, Github, MessageCircle, You
 import { Link } from "wouter";
 import { useLanguage } from "../contexts/LanguageContext";
 
-const avatarUrl = "/manus-storage/yk-anas-avatar_0b794908.webp";
+const avatarUrl = "https://raw.githubusercontent.com/YK0Anas/Yk_Anas-Website/main/assets/yk-anas-avatar.webp";
 
 function SectionLabel({ index, children }: { index: string; children: ReactNode }) {
   return (

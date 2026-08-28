@@ -9,7 +9,7 @@ import { Link, useLocation } from "wouter";
 import LanguageToggle from "./LanguageToggle";
 import { useLanguage } from "../contexts/LanguageContext";
 
-const markUrl = "/manus-storage/yk-anas-mark_62f24d85.png";
+const markUrl = "https://raw.githubusercontent.com/YK0Anas/Yk_Anas-Website/main/assets/yk-anas-mark.png";
 
 const navigation = [
   { href: "/work", en: "Work", ar: "الأعمال" },

@@ -8,7 +8,7 @@ import { ArrowUpRight, Check, MessageCircle } from "lucide-react";
 import { Link } from "wouter";
 import { useLanguage } from "../contexts/LanguageContext";
 
-const botOrbitUrl = "/manus-storage/yk-anas-bot-orbit_63f7c653.png";
+const botOrbitUrl = "https://raw.githubusercontent.com/YK0Anas/Yk_Anas-Website/main/assets/yk-anas-bot-orbit.png";
 
 function SectionLabel({ index, children }: { index: string; children: ReactNode }) {
   return <div className="section-label"><span className="section-label__index">{index}</span><span>{children}</span></div>;
