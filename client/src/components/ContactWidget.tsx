@@ -16,11 +16,18 @@ type ContactMode = "options" | "form";
 type ServiceKey = "website" | "discord" | "drawing" | "another";
 
 const SERVICE_KEYS: ServiceKey[] = ["website", "discord", "drawing", "another"];
+const CONTACT_OPEN_EVENT = "yk-anas:open-contact";
+
+type ContactOpenDetail = { service?: string };
+
+function isServiceKey(value: string): value is ServiceKey {
+  return SERVICE_KEYS.includes(value as ServiceKey);
+}
 
 function getRequestedService(): string {
   if (typeof window === "undefined") return "";
   const requestedService = new URLSearchParams(window.location.search).get("service") ?? "";
-  return SERVICE_KEYS.includes(requestedService as ServiceKey) ? requestedService : "";
+  return isServiceKey(requestedService) ? requestedService : "";
 }
 
 type FormValues = {
@@ -44,11 +51,24 @@ export default function ContactWidget() {
 
   useEffect(() => {
     const serviceFromLink = getRequestedService();
-    if (!serviceFromLink) return;
-    setIsOpen(true);
-    setMode("form");
-    setStatus("idle");
-    setValues((current) => ({ ...current, service: serviceFromLink }));
+    if (serviceFromLink) {
+      setIsOpen(true);
+      setMode("form");
+      setStatus("idle");
+      setValues((current) => ({ ...current, service: serviceFromLink }));
+    }
+
+    function handleContactOpen(event: Event) {
+      const serviceFromEvent = (event as CustomEvent<ContactOpenDetail>).detail?.service ?? "";
+      if (!isServiceKey(serviceFromEvent)) return;
+      setIsOpen(true);
+      setMode("form");
+      setStatus("idle");
+      setValues((current) => ({ ...current, service: serviceFromEvent }));
+    }
+
+    window.addEventListener(CONTACT_OPEN_EVENT, handleContactOpen);
+    return () => window.removeEventListener(CONTACT_OPEN_EVENT, handleContactOpen);
   }, [location]);
 
   function closeWidget() {
