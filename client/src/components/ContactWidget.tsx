@@ -3,8 +3,9 @@
  * Keep the floating control compact, coral, keyboard-friendly, bilingual, and honest
  * about the lightweight email service handling the form submission.
  */
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { ArrowUpRight, Mail, MessageCircle, Send, X } from "lucide-react";
+import { useLocation } from "wouter";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const DISCORD_URL = "https://discord.com/users/1542793027456606281";
@@ -12,6 +13,15 @@ const FORM_ENDPOINT = "https://formsubmit.co/ajax/anastayl560@gmail.com";
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 type ContactMode = "options" | "form";
+type ServiceKey = "website" | "discord" | "drawing" | "another";
+
+const SERVICE_KEYS: ServiceKey[] = ["website", "discord", "drawing", "another"];
+
+function getRequestedService(): string {
+  if (typeof window === "undefined") return "";
+  const requestedService = new URLSearchParams(window.location.search).get("service") ?? "";
+  return SERVICE_KEYS.includes(requestedService as ServiceKey) ? requestedService : "";
+}
 
 type FormValues = {
   name: string;
@@ -23,12 +33,23 @@ type FormValues = {
 const initialValues: FormValues = { name: "", email: "", service: "", message: "" };
 
 export default function ContactWidget() {
+  const [location] = useLocation();
   const { language } = useLanguage();
   const isArabic = language === "ar";
-  const [isOpen, setIsOpen] = useState(false);
-  const [mode, setMode] = useState<ContactMode>("options");
+  const requestedService = getRequestedService();
+  const [isOpen, setIsOpen] = useState(() => Boolean(requestedService));
+  const [mode, setMode] = useState<ContactMode>(() => requestedService ? "form" : "options");
   const [status, setStatus] = useState<FormStatus>("idle");
-  const [values, setValues] = useState<FormValues>(initialValues);
+  const [values, setValues] = useState<FormValues>(() => ({ ...initialValues, service: requestedService }));
+
+  useEffect(() => {
+    const serviceFromLink = getRequestedService();
+    if (!serviceFromLink) return;
+    setIsOpen(true);
+    setMode("form");
+    setStatus("idle");
+    setValues((current) => ({ ...current, service: serviceFromLink }));
+  }, [location]);
 
   function closeWidget() {
     setIsOpen(false);

@@ -66,7 +66,7 @@ export default function Services() {
               <article className={`service-card service-card--${service.key}`} key={service.key}>
                 <div className="service-card__top"><span className="service-card__number">{service.number}</span><Icon size={25} strokeWidth={1.6} aria-hidden="true" /></div>
                 <div className="service-card__body"><p className="mono-label">{copy.note}</p><h3>{copy.title}</h3><p>{copy.body}</p></div>
-                <Link className="service-card__link" href="/connect">{isArabic ? "اسأل عن هذه الخدمة" : "Ask about this service"}<ArrowUpRight size={16} /></Link>
+                <Link className="service-card__link" href={`/connect?service=${service.key}`}>{isArabic ? "اسأل عن هذه الخدمة" : "Ask about this service"}<ArrowUpRight size={16} /></Link>
               </article>
             );
           })}
