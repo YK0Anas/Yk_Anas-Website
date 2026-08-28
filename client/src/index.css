@@ -155,12 +155,18 @@
 }
 
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 76px;
   gap: 24px;
   border-bottom: 1.5px solid var(--ink);
+  background: rgba(247, 245, 239, 0.94);
+  box-shadow: 0 5px 0 rgba(23, 26, 33, 0.08);
+  backdrop-filter: blur(12px);
 }
 
 .brand-lockup {
