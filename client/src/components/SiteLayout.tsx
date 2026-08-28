@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import LanguageToggle from "./LanguageToggle";
+import ContactWidget from "./ContactWidget";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const markUrl = "https://raw.githubusercontent.com/YK0Anas/Yk_Anas-Website/main/assets/yk-anas-mark.png";
@@ -71,6 +72,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           </Link>
         </div>
       </footer>
+      <ContactWidget />
       <LanguageToggle />
     </div>
   );

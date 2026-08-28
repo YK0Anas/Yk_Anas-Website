@@ -1,0 +1,183 @@
+/*
+ * Soft Utility design reminder: contact is an open door, not a loud pop-up.
+ * Keep the floating control compact, coral, keyboard-friendly, bilingual, and honest
+ * about the lightweight email service handling the form submission.
+ */
+import { type FormEvent, useState } from "react";
+import { ArrowUpRight, Mail, MessageCircle, Send, X } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
+
+const DISCORD_URL = "https://discord.com/users/1542793027456606281";
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/anastayl560@gmail.com";
+
+type FormStatus = "idle" | "sending" | "success" | "error";
+type ContactMode = "options" | "form";
+
+type FormValues = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+const initialValues: FormValues = { name: "", email: "", message: "" };
+
+export default function ContactWidget() {
+  const { language } = useLanguage();
+  const isArabic = language === "ar";
+  const [isOpen, setIsOpen] = useState(false);
+  const [mode, setMode] = useState<ContactMode>("options");
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [values, setValues] = useState<FormValues>(initialValues);
+
+  function closeWidget() {
+    setIsOpen(false);
+    setMode("options");
+    setStatus("idle");
+  }
+
+  function openEmailForm() {
+    setMode("form");
+    setStatus("idle");
+  }
+
+  function updateField(field: keyof FormValues, value: string) {
+    setValues((current) => ({ ...current, [field]: value }));
+    if (status !== "idle") setStatus("idle");
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus("sending");
+
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...values,
+          _subject: `New portfolio message from ${values.name}`,
+          _template: "table",
+        }),
+      });
+
+      if (!response.ok) throw new Error("Form submission failed");
+      setStatus("success");
+      setValues(initialValues);
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  const labels = isArabic
+    ? {
+        open: "تواصل مع أنس",
+        close: "إغلاق خيارات التواصل",
+        title: "لنتحدث",
+        subtitle: "اختر الطريقة التي تناسبك.",
+        discord: "تواصل عبر Discord",
+        discordNote: "افتح محادثة مباشرة",
+        email: "أرسل بريداً إلكترونياً",
+        emailNote: "اكتب رسالة من الموقع",
+        back: "العودة إلى الخيارات",
+        name: "الاسم",
+        emailField: "بريدك الإلكتروني",
+        message: "رسالتك",
+        namePlaceholder: "اكتب اسمك",
+        emailPlaceholder: "you@example.com",
+        messagePlaceholder: "ما الذي تريد أن نبنيه؟",
+        send: "إرسال الرسالة",
+        sending: "جارٍ الإرسال…",
+        success: "تم إرسال رسالتك. شكراً لتواصلك!",
+        error: "تعذر إرسال الرسالة الآن. حاول مرة أخرى أو تواصل عبر Discord.",
+        serviceNote: "تصل الرسالة إلى anastayl560@gmail.com",
+      }
+    : {
+        open: "Contact Anas",
+        close: "Close contact options",
+        title: "Let’s talk",
+        subtitle: "Choose the route that feels right.",
+        discord: "Contact through Discord",
+        discordNote: "Open a direct conversation",
+        email: "Send an email",
+        emailNote: "Write a message from the site",
+        back: "Back to choices",
+        name: "Name",
+        emailField: "Your email",
+        message: "Message",
+        namePlaceholder: "Your name",
+        emailPlaceholder: "you@example.com",
+        messagePlaceholder: "What should we make?",
+        send: "Send message",
+        sending: "Sending…",
+        success: "Message sent. Thanks for reaching out!",
+        error: "The message could not be sent. Try again or contact me through Discord.",
+        serviceNote: "Delivered to anastayl560@gmail.com",
+      };
+
+  return (
+    <div className="contact-widget">
+      {isOpen && (
+        <section className={`contact-popover ${mode === "form" ? "contact-popover--form" : ""}`} aria-label={labels.title}>
+          <div className="contact-popover__header">
+            <div>
+              <span className="mono-label">{isArabic ? "باب مفتوح" : "OPEN CHANNEL"}</span>
+              <h2>{labels.title}</h2>
+            </div>
+            <button className="contact-popover__close" type="button" onClick={closeWidget} aria-label={labels.close}>
+              <X size={17} aria-hidden="true" />
+            </button>
+          </div>
+
+          {mode === "options" ? (
+            <>
+              <p className="contact-popover__subtitle">{labels.subtitle}</p>
+              <div className="contact-options">
+                <a className="contact-option" href={DISCORD_URL} target="_blank" rel="noreferrer" onClick={closeWidget}>
+                  <span className="contact-option__icon"><MessageCircle size={18} aria-hidden="true" /></span>
+                  <span><strong>{labels.discord}</strong><small>{labels.discordNote}</small></span>
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </a>
+                <button className="contact-option" type="button" onClick={openEmailForm}>
+                  <span className="contact-option__icon"><Mail size={18} aria-hidden="true" /></span>
+                  <span><strong>{labels.email}</strong><small>{labels.emailNote}</small></span>
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </button>
+              </div>
+            </>
+          ) : (
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <button className="contact-form__back" type="button" onClick={() => setMode("options")}>
+                <ArrowUpRight size={14} aria-hidden="true" /> {labels.back}
+              </button>
+              <label>
+                <span>{labels.name}</span>
+                <input required value={values.name} onChange={(event) => updateField("name", event.target.value)} placeholder={labels.namePlaceholder} autoComplete="name" />
+              </label>
+              <label>
+                <span>{labels.emailField}</span>
+                <input required type="email" value={values.email} onChange={(event) => updateField("email", event.target.value)} placeholder={labels.emailPlaceholder} autoComplete="email" />
+              </label>
+              <label>
+                <span>{labels.message}</span>
+                <textarea required rows={4} value={values.message} onChange={(event) => updateField("message", event.target.value)} placeholder={labels.messagePlaceholder} />
+              </label>
+              <button className="contact-form__submit" type="submit" disabled={status === "sending"}>
+                <Send size={15} aria-hidden="true" /> {status === "sending" ? labels.sending : labels.send}
+              </button>
+              <p className="contact-form__note">{labels.serviceNote}</p>
+              {status === "success" && <p className="contact-form__status contact-form__status--success" role="status">{labels.success}</p>}
+              {status === "error" && <p className="contact-form__status contact-form__status--error" role="alert">{labels.error}</p>}
+            </form>
+          )}
+        </section>
+      )}
+
+      <button className="contact-toggle" type="button" onClick={() => setIsOpen((open) => !open)} aria-expanded={isOpen} aria-label={isOpen ? labels.close : labels.open} title={labels.open}>
+        {isOpen ? <X size={19} aria-hidden="true" /> : <Mail size={19} aria-hidden="true" />}
+      </button>
+    </div>
+  );
+}
