@@ -2204,3 +2204,210 @@ html[dir="rtl"] .contact-form__back svg {
     animation: none;
   }
 }
+
+/* Soft Utility Services page: the offer cards use distinct paper panels and a clear studio-menu rhythm. */
+.page-intro--services {
+  background: var(--yellow);
+}
+
+.page-intro--services h1 span {
+  color: var(--coral);
+}
+
+.page-intro__note--services {
+  transform: rotate(-2deg);
+}
+
+.services-note-mark {
+  display: grid;
+  width: 49px;
+  height: 49px;
+  place-items: center;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: var(--coral);
+  font-size: 1.1rem;
+  transform: rotate(8deg);
+}
+
+.services-list {
+  padding-top: clamp(74px, 9vw, 122px);
+  padding-bottom: clamp(88px, 11vw, 150px);
+}
+
+.services-list__heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 52px;
+}
+
+.services-list__heading h2 {
+  max-width: 650px;
+  margin: 0;
+  font-size: clamp(2.55rem, 5vw, 5rem);
+  line-height: 0.92;
+  letter-spacing: -0.08em;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.service-card {
+  display: flex;
+  min-height: 360px;
+  flex-direction: column;
+  padding: 22px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 5px 5px 0 var(--ink);
+  transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), background 220ms var(--ease-out);
+}
+
+.service-card:nth-child(2) {
+  transform: translateY(28px) rotate(1.2deg);
+}
+
+.service-card:nth-child(3) {
+  transform: rotate(-1.2deg);
+}
+
+.service-card:hover,
+.service-card:focus-within {
+  transform: translate(-3px, -6px) rotate(0deg);
+  box-shadow: 9px 10px 0 var(--ink);
+}
+
+.service-card--website:hover,
+.service-card--website:focus-within { background: #ffe0d9; }
+.service-card--discord:hover,
+.service-card--discord:focus-within { background: #dfe7ff; }
+.service-card--drawing:hover,
+.service-card--drawing:focus-within { background: #ddf8f1; }
+
+.service-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.service-card__top svg {
+  color: var(--cobalt);
+}
+
+.service-card__number {
+  display: inline-flex;
+  width: 34px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  background: var(--yellow);
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+}
+
+.service-card__body {
+  padding-top: 31px;
+}
+
+.service-card__body h3 {
+  max-width: 250px;
+  margin: 0 0 17px;
+  font-size: clamp(1.55rem, 2.6vw, 2.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+
+.service-card__body > p:last-child {
+  max-width: 285px;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.91rem;
+  line-height: 1.5;
+}
+
+.service-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: auto;
+  padding-top: 18px;
+  border-bottom: 1.5px solid var(--ink);
+  font-family: "DM Mono", monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  transition: gap 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+
+.service-card__link:hover,
+.service-card__link:focus-visible {
+  gap: 13px;
+  color: var(--cobalt);
+}
+
+.services-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 36px;
+  padding-bottom: 100px;
+  border-top: 1.5px solid var(--ink);
+}
+
+.services-cta h2 {
+  max-width: 650px;
+  margin: 10px 0 0;
+  font-size: clamp(2rem, 3.8vw, 4.1rem);
+  line-height: 0.95;
+  letter-spacing: -0.075em;
+}
+
+html[dir="rtl"] .services-cta h2,
+html[dir="rtl"] .services-list__heading h2,
+html[dir="rtl"] .service-card__body h3 {
+  letter-spacing: -0.045em;
+}
+
+@media (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .service-card,
+  .service-card:nth-child(2),
+  .service-card:nth-child(3) {
+    min-height: 300px;
+    transform: none;
+  }
+
+  .services-cta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 760px) {
+  .services-list__heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 23px;
+    margin-bottom: 38px;
+  }
+
+  .services-list__heading h2 {
+    max-width: 540px;
+  }
+
+  .services-cta {
+    padding-bottom: 84px;
+  }
+}
