@@ -2411,3 +2411,166 @@ html[dir="rtl"] .service-card__body h3 {
     padding-bottom: 84px;
   }
 }
+
+/* Soft Utility interaction polish: confirmations feel warm and tactile, never abrupt. */
+.contact-success {
+  display: flex;
+  min-height: 255px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 18px 4px 8px;
+}
+
+.contact-success__mark {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 22px;
+  place-items: center;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--ink);
+  font-size: 1.7rem;
+  font-weight: 700;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.contact-success p {
+  max-width: 270px;
+  margin: 2px 0 24px;
+  font-size: 1.28rem;
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.contact-success__again {
+  margin-top: 0;
+}
+
+.service-card {
+  will-change: transform, box-shadow;
+}
+
+.service-card:hover,
+.service-card:focus-within {
+  transform: translate(-5px, -9px) rotate(0deg);
+  box-shadow: 12px 13px 0 var(--ink);
+}
+
+.service-card__link:active,
+.contact-success__again:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact-success__mark {
+    animation: contact-success-pop 520ms var(--ease-out) both;
+  }
+
+  .contact-success .mono-label,
+  .contact-success p,
+  .contact-success__again {
+    animation: contact-success-rise 420ms var(--ease-out) both;
+  }
+
+  .contact-success p { animation-delay: 70ms; }
+  .contact-success__again { animation-delay: 130ms; }
+
+  @keyframes contact-success-pop {
+    0% { opacity: 0; transform: scale(0.72) rotate(-8deg); }
+    70% { transform: scale(1.08) rotate(3deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  @keyframes contact-success-rise {
+    0% { opacity: 0; transform: translateY(9px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card,
+  .contact-success__mark,
+  .contact-success .mono-label,
+  .contact-success p,
+  .contact-success__again {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Soft Utility brand refinement: mint is the field; coral is the signal; cobalt is the guide. */
+.page-intro--connect,
+.page-intro--services {
+  background: var(--mint);
+}
+
+.page-intro--connect .page-intro__note,
+.page-intro--services .page-intro__note {
+  background: var(--paper);
+}
+
+.brand-name,
+.footer-brand-name {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.brand-name__prefix,
+.footer-brand-name .brand-name__prefix {
+  color: var(--coral);
+}
+
+.brand-name__suffix,
+.footer-brand-name .brand-name__suffix {
+  color: var(--ink);
+  font-stretch: condensed;
+}
+
+.footer-brand-name {
+  font-size: 0.78rem;
+}
+
+/* Maker voice: these cards should feel like annotated experiments, not generic packages. */
+.service-card__body > p:last-child {
+  max-width: 300px;
+}
+
+.service-card--website .service-card__body > p:last-child::after {
+  content: "  /  ship it clean";
+  color: var(--cobalt);
+  font-family: "DM Mono", monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.service-card--discord .service-card__body > p:last-child::after {
+  content: "  /  keep the server moving";
+  color: var(--cobalt);
+  font-family: "DM Mono", monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.service-card--drawing .service-card__body > p:last-child::after {
+  content: "  /  make the idea visible";
+  color: var(--cobalt);
+  font-family: "DM Mono", monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card:hover,
+  .service-card:focus-within {
+    transform: none;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+}

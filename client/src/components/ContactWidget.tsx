@@ -135,7 +135,8 @@ export default function ContactWidget() {
         messagePlaceholder: "ما الذي تريد أن نبنيه؟",
         send: "إرسال الرسالة",
         sending: "جارٍ الإرسال…",
-        success: "تم إرسال رسالتك. شكراً لتواصلك!",
+        success: "تم إرسال رسالتك بنجاح. شكراً لتواصلك!",
+        sendAnother: "إرسال رسالة أخرى",
         error: "تعذر إرسال الرسالة الآن. حاول مرة أخرى أو تواصل عبر Discord.",
         serviceNote: "تصل الرسالة إلى anastayl560@gmail.com",
       }
@@ -159,7 +160,8 @@ export default function ContactWidget() {
         messagePlaceholder: "What should we make?",
         send: "Send message",
         sending: "Sending…",
-        success: "Message sent. Thanks for reaching out!",
+        success: "Your message was sent successfully. Thanks for reaching out!",
+        sendAnother: "Send another message",
         error: "The message could not be sent. Try again or contact me through Discord.",
         serviceNote: "Delivered to anastayl560@gmail.com",
       };
@@ -208,6 +210,15 @@ export default function ContactWidget() {
                 </button>
               </div>
             </>
+          ) : status === "success" ? (
+            <div className="contact-success" role="status" aria-live="polite">
+              <span className="contact-success__mark" aria-hidden="true">✓</span>
+              <span className="mono-label">{isArabic ? "تم التسليم" : "DELIVERED"}</span>
+              <p>{labels.success}</p>
+              <button className="contact-form__submit contact-success__again" type="button" onClick={() => setStatus("idle")}>
+                <Send size={15} aria-hidden="true" /> {labels.sendAnother}
+              </button>
+            </div>
           ) : (
             <form className="contact-form" onSubmit={handleSubmit}>
               <button className="contact-form__back" type="button" onClick={() => setMode("options")}>
@@ -236,7 +247,6 @@ export default function ContactWidget() {
                 <Send size={15} aria-hidden="true" /> {status === "sending" ? labels.sending : labels.send}
               </button>
               <p className="contact-form__note">{labels.serviceNote}</p>
-              {status === "success" && <p className="contact-form__status contact-form__status--success" role="status">{labels.success}</p>}
               {status === "error" && <p className="contact-form__status contact-form__status--error" role="alert">{labels.error}</p>}
             </form>
           )}

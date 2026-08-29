@@ -35,7 +35,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           <span className="brand-mark">
             <img src={markUrl} alt="" aria-hidden="true" />
           </span>
-          <span className="brand-name">YK_Anas</span>
+          <span className="brand-name"><span className="brand-name__prefix">YK_</span><span className="brand-name__suffix">ANAS</span></span>
         </Link>
         <nav className="topnav" aria-label={isArabic ? "التنقل الرئيسي" : "Primary navigation"}>
           {navigation.map((item) => (
@@ -57,7 +57,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <footer className="footer section-wrap">
         <Link className="footer__mark" href="/" aria-label={isArabic ? "العودة إلى الرئيسية" : "Back to YK_Anas home"}>
           <img src={markUrl} alt="" aria-hidden="true" />
-          <span>YK_Anas</span>
+          <span className="footer-brand-name"><span className="brand-name__prefix">YK_</span><span className="brand-name__suffix">ANAS</span></span>
         </Link>
         <span className="footer__note">
           {isArabic ? "صُمم وطُوّر بدافع الفضول." : "Designed, coded, and shipped with curiosity."}
